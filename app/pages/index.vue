@@ -13,6 +13,8 @@ const fileInput = useTemplateRef("fileInput");
 const result = ref<ReceiptResponse | undefined>(undefined);
 
 async function uploadFile(file: File) {
+  resultLinkPhone.value = "";
+  resultLinkWeb.value = "";
   const mimetype = file.type;
 
   if (mimetype !== "image/png" && mimetype !== "image/jpeg") {
@@ -87,8 +89,7 @@ function handleFileInput(e: Event) {
 
 <template>
   <div class="hero">
-    <div
-class="card upload-area" @click="handleClick" @drop.prevent="handleDrop" @dragover.prevent="onDragOver"
+    <div class="card upload-area" @click="handleClick" @drop.prevent="handleDrop" @dragover.prevent="onDragOver"
       @dragleave.prevent="onDragLeave">
       <Icon size="5rem" name="mdi:dropbox" />
       <p v-if="!isLoading">
