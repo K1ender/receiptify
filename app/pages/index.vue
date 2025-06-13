@@ -67,11 +67,11 @@ function onDragLeave() {
 }
 
 function handleClick() {
-  isLoading.value = true;
   fileInput.value?.click();
 }
 
 function handleFileInput(e: Event) {
+  isLoading.value = true;
   try {
     if (e.target instanceof HTMLInputElement) {
       const files = e.target.files;
@@ -89,7 +89,8 @@ function handleFileInput(e: Event) {
 
 <template>
   <div class="hero">
-    <div class="card upload-area" @click="handleClick" @drop.prevent="handleDrop" @dragover.prevent="onDragOver"
+    <div
+class="card upload-area" @click="handleClick" @drop.prevent="handleDrop" @dragover.prevent="onDragOver"
       @dragleave.prevent="onDragLeave">
       <Icon size="5rem" name="mdi:dropbox" />
       <p v-if="!isLoading">
