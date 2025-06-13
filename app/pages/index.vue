@@ -5,6 +5,8 @@ import type { ReceiptResponse } from "~~/shared/types";
 
 const isDragging = ref(false);
 const isLoading = ref(false);
+const resultLinkWeb = ref("");
+const resultLinkPhone = ref("");
 
 const fileInput = useTemplateRef("fileInput");
 
@@ -31,7 +33,9 @@ async function uploadFile(file: File) {
   }
 
   result.value = res;
-  console.log(CashewLinkBuilder("web", res));
+
+  resultLinkWeb.value = CashewLinkBuilder("web", res);
+  resultLinkPhone.value = CashewLinkBuilder("phone", res);
 }
 
 async function handleDrop(e: DragEvent) {
@@ -61,8 +65,8 @@ function onDragLeave() {
 }
 
 function handleClick() {
+  isLoading.value = true;
   fileInput.value?.click();
-
 }
 
 function handleFileInput(e: Event) {
@@ -72,7 +76,6 @@ function handleFileInput(e: Event) {
       if (files && files.length > 0) {
         const file = files[0];
         if (!file) return;
-        isLoading.value = true;
         uploadFile(file);
       }
     }
@@ -104,6 +107,10 @@ class="card upload-area" @click="handleClick" @drop.prevent="handleDrop" @dragov
           </li>
         </ul>
       </div>
+    </div>
+    <div v-if="resultLinkWeb" class="card links">
+      <a class="link" :href="resultLinkWeb" target="_blank">Add to Cashew (WEB)</a>
+      <a class="link" :href="resultLinkPhone" target="_blank">Add to Cashew (PHONE)</a>
     </div>
   </div>
 </template>
@@ -146,5 +153,34 @@ ul {
   gap: 0.8rem;
   display: flex;
   flex-direction: column;
+}
+
+.link {
+  display: block;
+
+  padding: 0.5rem 1rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+
+.btn-like:hover {
+  background-color: #005bb5;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 </style>

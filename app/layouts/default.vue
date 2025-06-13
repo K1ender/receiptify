@@ -44,4 +44,9 @@ body {
   color: var(--text-color);
   font-family: "Inter", "sans-serif";
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
 </style>
