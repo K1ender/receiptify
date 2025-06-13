@@ -26,10 +26,10 @@ Built to detect multilingual receipts (Romanian, Russian, etc.)
 
 ```bash
 # Install dependencies
-pnpm install
+bun install
 
 # Run dev server
-pnpm dev
-````
+bun dev
+```
 
 Then open `http://localhost:3000`.
