@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
   if (!raw) {
     console.log(completion);
-    throw new Error("Empty or invalid response from OpenRouter");
+    throw new Error("Empty or invalid response");
   }
 
   const cleaned = raw
@@ -29,8 +29,6 @@ export default defineEventHandler(async (event) => {
     .replace(/^```/, "")
     .replace(/```$/, "")
     .trim();
-
-  console.log("Response:", cleaned);
 
   return JSON.parse(cleaned) as ReceiptResponse;
 });

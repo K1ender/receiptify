@@ -5,7 +5,7 @@ Your task is to extract data from an image of a receipt and return a JSON object
 
 ⚠️ If the image is *not* a receipt, set "error": true and leave the rest of the fields empty or null — but **do not change the JSON structure**.
 
-🧠 Product names must be returned *exactly as printed* on the receipt, even if they are in Romanian, Russian, etc. Do not translate them.
+🧠 Product names must be returned in English language
 
 Here is the required JSON format:
 
@@ -21,7 +21,7 @@ Here is the required JSON format:
   "items": [
     {
       "id": "number",           // unique identifier for key
-      "name": "string",        // as printed, keep original language
+      "name": "string",
       "quantity": number,
       "price": number,         // per unit
       "total": number          // quantity × price
@@ -42,44 +42,41 @@ Write only correct name without strange symbols.
 `;
 
 export async function fetchReceipt(base64img: string) {
-  const response = await fetch(
-    "https://openrouter.ai/api/v1/chat/completions",
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-        accept: "application/json",
-        "accept-encoding": "gzip, deflate, br",
-      },
-      body: JSON.stringify({
-        model: "meta-llama/llama-4-maverick:free",
-        stream: false,
-        messages: [
-          {
-            role: "system",
-            content: [
-              {
-                type: "text",
-                text: prompt,
+  const response = await fetch(process.env.API_ENDPOINT!, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      "Content-Type": "application/json",
+      accept: "application/json",
+      "accept-encoding": "gzip, deflate, br",
+    },
+    body: JSON.stringify({
+      model: process.env.AI_MODEL,
+      stream: false,
+      messages: [
+        {
+          role: "system",
+          content: [
+            {
+              type: "text",
+              text: prompt,
+            },
+          ],
+        },
+        {
+          role: "user",
+          content: [
+            {
+              type: "image_url",
+              image_url: {
+                url: `data:image/jpeg;base64,${base64img}`,
               },
-            ],
-          },
-          {
-            role: "user",
-            content: [
-              {
-                type: "image_url",
-                image_url: {
-                  url: `data:image/jpeg;base64,${base64img}`,
-                },
-              },
-            ],
-          },
-        ],
-      }),
-    }
-  );
+            },
+          ],
+        },
+      ],
+    }),
+  });
 
   return await response.json();
 }

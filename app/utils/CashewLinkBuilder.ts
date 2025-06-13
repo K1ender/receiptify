@@ -9,27 +9,17 @@ export default (platform: "phone" | "web", response: ReceiptResponse) => {
 
 function LinkBuilder(origin: URL, receipt: ReceiptResponse) {
   const url = new URL(origin.toString());
-  url.pathname = "/addTransaction";
+  url.pathname = "/addTransactionRoute";
 
-  const obj: {
-    transactions: {
-      amount: number;
-      notes?: string;
-      category?: string;
-    }[];
-  } = {
-    transactions: [],
-  };
-
-  receipt.items.forEach((item) => {
-    obj.transactions.push({
-      amount: -item.total,
-      notes: item.name,
-      category: receipt.store.category,
-    });
-  });
-
-  url.searchParams.set("JSON", JSON.stringify(obj));
+  url.searchParams.set("amount", receipt.total.toString());
+  url.searchParams.set("title", receipt.store.name);
+  url.searchParams.set(
+    "notes",
+    receipt.items.map((i) => `${i.name} x ${i.quantity}`).join("\n")
+  );
+  if (receipt.store.category) {
+    url.searchParams.set("category", receipt.store.category);
+  }
 
   return url.toString();
 }
