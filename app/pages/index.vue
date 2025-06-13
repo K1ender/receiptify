@@ -40,6 +40,7 @@ async function handleDrop(e: DragEvent) {
     if (e.dataTransfer?.files && e.dataTransfer.files.length > 0) {
       const file = e.dataTransfer.files[0];
       if (!file) return;
+      isLoading.value = true;
       await uploadFile(file);
     }
   } catch (e) {
@@ -65,20 +66,26 @@ function handleClick() {
 }
 
 function handleFileInput(e: Event) {
-  if (e.target instanceof HTMLInputElement) {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      if (!file) return;
-      uploadFile(file);
+  try {
+    if (e.target instanceof HTMLInputElement) {
+      const files = e.target.files;
+      if (files && files.length > 0) {
+        const file = files[0];
+        if (!file) return;
+        isLoading.value = true;
+        uploadFile(file);
+      }
     }
+  } finally {
+    isLoading.value = false;
   }
 }
 </script>
 
 <template>
   <div class="hero">
-    <div class="card upload-area" @click="handleClick" @drop.prevent="handleDrop" @dragover.prevent="onDragOver"
+    <div
+class="card upload-area" @click="handleClick" @drop.prevent="handleDrop" @dragover.prevent="onDragOver"
       @dragleave.prevent="onDragLeave">
       <Icon size="5rem" name="mdi:dropbox" />
       <p v-if="!isLoading">
