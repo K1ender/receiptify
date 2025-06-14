@@ -20,7 +20,7 @@ const { item, currency = "" } = defineProps<{
 }
 
 .price {
-  font-size: 0.8rem;
+  font-size: var(--font-small);
   line-height: 0.8rem;
 }
 </style>

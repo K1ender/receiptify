@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-pattern .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-pattern .gitignore",
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@nuxt/eslint": "1.4.1",
@@ -19,5 +20,9 @@
     "vue": "^3.5.16",
     "vue-router": "^4.5.1",
     "@nuxt/kit": "^4.0.0-alpha.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "vue-tsc": "^2.2.10"
   }
 }

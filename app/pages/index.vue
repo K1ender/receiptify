@@ -125,15 +125,15 @@ class="card upload-area" @click="handleClick" @drop.prevent="handleDrop" @dragov
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--gap-6);
 
   .card {
-    width: 24rem;
+    width: var(--width-sm);
     display: flex;
     align-items: center;
     flex-direction: column;
 
-    border: 1px solid var(--text-color);
+    border: var(--border-1) solid var(--text-color);
     border-radius: var(--card-rounded);
     padding: var(--padding-6);
 
@@ -152,7 +152,7 @@ class="card upload-area" @click="handleClick" @drop.prevent="handleDrop" @dragov
 
 ul {
   list-style: none;
-  gap: 0.8rem;
+  gap: var(--gap-6);
   display: flex;
   flex-direction: column;
 }
@@ -160,8 +160,8 @@ ul {
 .link {
   display: block;
 
-  padding: 0.5rem 1rem;
-  background-color: #0070f3;
+  padding: var(--padding-4) var(--padding-6);
+  background-color: var(--blue-700);
   color: white;
   border: none;
   border-radius: 0.375rem;
@@ -175,8 +175,8 @@ ul {
 }
 
 
-.btn-like:hover {
-  background-color: #005bb5;
+.like:hover {
+  background-color: var(--blue-600);
 }
 
 .links {
